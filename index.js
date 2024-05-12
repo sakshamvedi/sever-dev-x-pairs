@@ -34,17 +34,23 @@ app.post('/login', async (req, res) => {
 
 
 app.post('/signup', async (req, res) => {
-    const login = req.body.username;
+    const username = req.body.username;
     const password = req.body.password;
     const userCred = new userModel({
-        username: login,
+        username: username,
         password: password
     })
-    await userCred.save().then(() => {
-        res.status(200).send('User created');
-    }).catch((err) => {
-        res.send('Error');
-    })
+    const user = await userModel.findOne({ "username": username });
+    if (user) {
+        res.status(409).send('User already exists');
+    } else {
+        await userCred.save().then(() => {
+            res.status(200).send('User created');
+        }).catch((err) => {
+            res.status(404).send('Error');
+        });
+    }
+
 })
 
 
