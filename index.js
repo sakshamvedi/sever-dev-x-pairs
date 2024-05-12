@@ -1,13 +1,14 @@
 const connectToMongoDB = require('./mongodb.config');
 const bodyParser = require('body-parser');
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
 const app = express()
 const port = 3000
 const { userModel } = require('./models/user.model');
 
 connectToMongoDB();
 app.use(express.json());
-
+app.use(cors());
 app.post('/login', async (req, res) => {
     const username = req.body.login;
     const password = req.body.password;
