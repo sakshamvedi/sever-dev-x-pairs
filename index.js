@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
 const app = express()
-const port = 3000
+const port = 3001
 const { userModel } = require('./models/user.model');
 
 connectToMongoDB();
 app.use(express.json());
 app.use(cors());
-app.post('/login', async (req, res) => {
+app.get('/login', async (req, res) => {
     const username = req.body.login;
     const password = req.body.password;
     try {
@@ -33,7 +33,7 @@ app.post('/login', async (req, res) => {
 
 
 
-app.post('/signup', async (req, res) => {
+app.get('/signup', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const userCred = new userModel({
