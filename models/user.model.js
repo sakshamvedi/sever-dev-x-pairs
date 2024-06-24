@@ -1,9 +1,11 @@
-const { default: mongoose } = require("mongoose")
-
-const userSchema = new mongoose.Schema({
-    username: String,
+const { default: mongoose } = require("mongoose");
+const authSchema = new mongoose.Schema({
     email: String,
-    password: mongoose.Schema.Types.Mixed,
-})
-const userModel = mongoose.model('User', userSchema);
+    displayName: String,
+    photoURL: String,
+    uid: String
+});
+
+const userModel = mongoose.model('authusers', authSchema);
+
 module.exports = { userModel };

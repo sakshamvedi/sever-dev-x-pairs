@@ -6,14 +6,17 @@ const app = express()
 const port = 3001;
 const crypto = require("crypto");
 const Razorpay = require('razorpay');
+const userSignup = require('./routes/userSignup');
 
-const { userModel } = require('./models/user.model');
+const tokenLogin = require('./routes/tokenLogin');
 const { walletModel } = require('./models/walllet.model');
 const { socketModel } = require('./models/socketuser.model');
 app.use(cors({
     origin: '*',
 }));
-
+app.use(express.json());
+app.use(cors());
+connectToMongoDB();
 app.get('/payment', (req, res) => {
     var instance = new Razorpay({
         key_id: 'rzp_test_aij1VSFIpBU1C5',
@@ -35,10 +38,14 @@ app.get('/payment', (req, res) => {
 
 })
 
+app.post('/signup', userSignup);
+console.log(userSignup);
+app.post('/validatetoken', tokenLogin)
 
-connectToMongoDB();
-app.use(express.json());
-app.use(cors());
+
+
+
+// After this line the things are have to change 
 
 app.post("/validate", async (req, res) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =

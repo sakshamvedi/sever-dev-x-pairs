@@ -1,10 +1,9 @@
 const { default: mongoose } = require("mongoose")
 
-const userSchema = new mongoose.Schema({
+const socketSchema = new mongoose.Schema({
     socketid: String,
     username: String,
     userid: String,
-
 })
-const socketModel = mongoose.model('SocketUser', userSchema);
+const socketModel = mongoose.model('SocketUser', socketSchema);
 module.exports = { socketModel };
